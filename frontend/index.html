@@ -1,2 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+</head>
+<body>
+    <h1>Login</h1>
+    <form id="loginForm">
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required>
+        <button type="submit">Login</button>
+    </form>
 
+    <script>
+
+        document.getElementById('loginForm').addEventListener('submit', function (event) {
+            event.preventDefault();
+
+            const password = document.getElementById('password').value;
+
+            // Senden Sie das Passwort an das Backend
+            fetch('http://localhost:3000/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ password: password })
+            })
+                .then(response => response.json())
+                .then(data => {
+                    console.log(data.message); // Server-Antwort anzeigen
+                })
+                .catch(error => {
+                    console.error('Fehler beim Senden des Passworts:', error);
+                });
+        });
+    </script>
+</body>
+</html>
 
